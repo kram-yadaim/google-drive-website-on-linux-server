@@ -1,0 +1,5 @@
+config.json
+config.tmp
+venv/
+cache/
+__pycache__/

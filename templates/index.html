@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f8fafd" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111318" media="(prefers-color-scheme: dark)">
+  <title>{{ title }}</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app" id="app">
+  <div class="scrim" id="scrim"></div>
+
+  <aside class="sidebar">
+    <a class="brand" href="/drive/" data-link>
+      <img src="{{ url_for('static', filename='favicon.svg') }}" alt="" width="40" height="40">
+      <span>{{ title }}</span>
+    </a>
+    <button class="new-btn" id="newBtn"><i data-icon="plus"></i>New</button>
+    <nav class="nav">
+      <a href="/drive/" data-link data-nav="drive"><i data-icon="drive"></i>My Drive</a>
+      <a href="/trash" data-link data-nav="trash"><i data-icon="trash"></i>Trash</a>
+    </nav>
+    <div class="storage" id="storage">
+      <div class="storage-label"><i data-icon="cloud"></i>Storage</div>
+      <div class="bar"><i></i></div>
+      <div class="storage-text" id="storageText">&nbsp;</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu"><i data-icon="menu"></i></button>
+      <form class="search" id="searchForm" role="search">
+        <i data-icon="search"></i>
+        <input id="searchInput" type="search" placeholder="Search in Drive" autocomplete="off" dir="auto" enterkeyhint="search" aria-label="Search">
+        <button type="button" class="icon-btn" id="searchClear" aria-label="Clear search" hidden><i data-icon="close"></i></button>
+      </form>
+      <button class="avatar" id="userBtn" title="{{ user }}" aria-label="Account menu">{{ user[:1]|upper }}</button>
+    </header>
+
+    <section class="panel" id="panel">
+      <div class="toolbar">
+        <nav class="crumbs" id="crumbs" aria-label="Folder path"></nav>
+        <div class="tools" id="tools"></div>
+      </div>
+      <div class="infobar" id="infobar"></div>
+      <div class="content" id="content"></div>
+      <div class="drop-overlay"><div class="pill"><i data-icon="upload"></i><span id="dropText">Drop files to upload</span></div></div>
+    </section>
+  </main>
+
+  <button class="fab" id="fab" aria-label="New"><i data-icon="plus"></i></button>
+</div>
+
+<div class="uploads" id="uploads" hidden></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<input type="file" id="fileInput" multiple hidden>
+<input type="file" id="folderInput" webkitdirectory multiple hidden>
+<iframe name="dlframe" id="dlframe" title="downloads" hidden></iframe>
+
+<script>window.HD = {{ {"user": user, "thumbs": thumbs, "title": title, "trashDays": trash_days}|tojson }};</script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
